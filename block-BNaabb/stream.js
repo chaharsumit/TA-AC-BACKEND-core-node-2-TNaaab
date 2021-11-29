@@ -9,10 +9,9 @@ function handleRequest(req, res){
   });
 
   req.on('end', () => {
-    console.log(store);
+    res.write(store);
+    res.end();
   })
-  res.write(store);
-  res.end();
 }
 
 server.listen(3456, () => {
