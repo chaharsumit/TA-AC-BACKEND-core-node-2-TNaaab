@@ -11,9 +11,22 @@ You are currently inside server.js
 
 Write code to 
 - capture absolute path of `server.js`(itself)
+
+users/user/block-BNaabe/node/server.js
+
 - get absolute path of `app.js`
+
+users/user/block-BNaabe/node/app.js
+
 - get realtive path of `index.html`
+
+./index.html
+
 - get absolute path of `index.html` using `path module` 
+
+let path = require('path');
+
+path.join(__dirname, 'index.html');
  
 #### Capture data on server
 
