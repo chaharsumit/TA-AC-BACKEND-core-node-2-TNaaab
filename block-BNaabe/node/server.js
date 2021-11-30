@@ -1,30 +1,52 @@
+/*
+Path 
+
+console.log(__filename);
+console.log(__dirname + 'app.js');
+console.log(./index.html);
+let path = require('path');
+path.join(__dirname, 'index.html');
+
+*/
+
+
+
+
 let http = require('http');
 let qs = require('querystring');
 
 let server = http.createServer(handleRequest);
 
-function handleRequest(req, res){
-  let store = '';
-  let dataFormat = req.headers['content-type'];
-  req.on('data', (chunk) => {
-    store+=chunk;
-  })
+/* 
+1.
 
-  req.on('end', () => {
-    if(req.method === "POST" && dataFormat === 'application/json'){
-      let parsedData = JSON.parse(store);
+function handleRequest(req, res){
+  if(req.method === 'POST' && req.url === '/'){
+    let store = '';
+    req.on('data', (chunk) => {
+      store+=chunk;
+    }).on('end', () => {
       res.statusCode = 201;
       res.end(store);
-    }
-    if(req.method === "POST" && dataFormat === 'application/x-www-form-urlencoded'){
-      let parsedData = qs.parse(store);
-      res.statusCode = 201;
-      res.end(JSON.stringify(parsedData));
-    }
-  })
+    })
+  }
 }
 
-server.listen(5000, () => {
-  console.log('server is listening on port: 5000');
-});
+2.
+
+function handleRequest(req, res){
+  if(req.method === 'POST' && req.url === '/'){
+    let store = '';
+    req.on('data', (chunk) => {
+      store+=chunk;
+    }).on('end', () => {
+      res.statusCode = 201;
+      let parsedData = qs.parse(store);
+      res.end(JSON.stringify(parsedData));
+    })
+  }
+}
+
+*/
+
 
