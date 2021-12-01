@@ -27,7 +27,7 @@ function handleRequest(req, res){
             return console.log(err);
           }
           fs.close(fd, () => {
-            res.end(`${username} was succesfully created`);
+            return res.end(`${username} was succesfully created`);
           });
         });
       });
@@ -40,9 +40,41 @@ function handleRequest(req, res){
           return console.log(err);
         }
         res.setHeader('Content-Type', 'application/json');
-        res.end(content);
+        return res.end(content);
       });
     }
+
+    if(parsedUrl.pathname === '/users' && req.method  === 'PUT'){
+      let username = parsedUrl.query.username;
+      fs.open(userPath + username + '.json', 'r+', (err, fd) => {
+        if(err){
+          return console.log(err);
+        }
+        fs.ftruncate(fd, (err) => {
+          return console.log(err);
+        });
+        fs.writeFile(fd, store, (err) => {
+          return console.log(err);
+        });
+        fs.close(fd, () => {
+          return res.end(`${username} update successfully`);
+        });
+      });
+    }
+
+    if(parsedUrl.pathname === '/users' && req.method === 'DELETE'){
+      let username = parsedUrl.query.username;
+      fs.unlink(usersPath + username + '.json', (err) => {
+        if(err){
+          return console.log(err);
+        }
+        return res.end(`${username} is deleted successfully`);
+      })
+    }
+
+    res.statusCode = 404;
+    res.end(`page not found 404`);
+
   });
 }
 
